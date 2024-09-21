@@ -1,26 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
+
+	const [color, setColor] = useState("green");
+	const [lights, setLight] = useState(["green", "yellow", "red"]);
+	const [activeIndex, setActiveIndex] = useState(null);
+
+	let handleClick = (light, index) => {
+		setColor(light)
+		setActiveIndex(index)
+	}
+
 	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+		<div>
+			<div className="container bg-dark" style={{ width: "2em", height: "5em" }}></div>
+			<div className="container d-flex flex-column align-items-center bg-dark rounded-4 pb-4 pt-3" style={{ width: "14em" }}>
+				{lights.map((light, index) => (
+					<div
+						key={index}
+						onClick={() => handleClick(light, index)}
+						className="my-2"
+						style={{
+							backgroundColor: light,
+							width: "10em",
+							height: "10em",
+							border: activeIndex === index ? `4px solid ${light}` : "none",
+							boxShadow: activeIndex === index ? `0 0 20px ${light}` : "none",
+							borderRadius: '50%'
+						}}
+					>
+					</div>
+				))}
+			</div>
 		</div>
-	);
+	)
 };
 
 export default Home;
